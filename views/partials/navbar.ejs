@@ -1,0 +1,96 @@
+<nav class="navbar">
+
+    <a href="#" class="logo">
+        <div class="logo-icon">I</div>
+        INKORA
+    </a>
+
+
+    <ul class="nav-links" id="navLinks">
+
+        <li>
+            <a href="#home" class="active">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="#featured">
+                Explore
+            </a>
+        </li>
+
+        <li>
+            <a href="#trending">
+                Categories
+            </a>
+        </li>
+
+        <li>
+            <a href="#about">
+                About
+            </a>
+        </li>
+
+    </ul>
+
+
+    <div class="nav-actions">
+
+        <% if (!locals.user) { %>
+            <a href="/user/login">
+                <button class="login-btn">
+                    Log in
+                </button>
+            </a>
+
+            <a href="/user/signup">
+                <button class="signup-btn">
+                    Sign up
+                </button>
+            </a>
+
+        <% } else { %>
+         
+
+                <!-- ACCOUNT -->
+
+                <div class="account">
+
+                    <button class="account-btn" id="accountBtn">
+                        <img src="<%= locals.user.profilePicture %>" alt="Profile picture" class="profilepic">
+                    </button>
+
+
+                    <div class="account-menu" id="accountMenu">
+
+                        <a href="/" style="font-weight: bolder;">
+                            <%= locals.user.userName %>
+                        </a>
+
+                        <a href="#">
+                            🧑 My Profile
+                        </a>
+
+                        <a href="#">
+                            🌓 Appearance
+                        </a>
+
+                        <a href="/user/logout">
+                            🚪 Logout
+                        </a>
+
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <button class="menu-btn" id="menuBtn">
+                ☰
+            </button>
+
+    </div>
+
+</nav>

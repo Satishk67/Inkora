@@ -1,0 +1,189 @@
+<script>
+
+    /* =========================
+       ACCOUNT DROPDOWN
+    ========================== */
+
+    const accountBtn =
+        document.getElementById("accountBtn");
+
+    const accountMenu =
+        document.getElementById("accountMenu");
+
+
+    accountBtn.addEventListener(
+        "click",
+        () => {
+
+            accountMenu.classList.toggle("active");
+
+        }
+    );
+
+
+
+    /* =========================
+       MOBILE MENU
+    ========================== */
+
+    const menuBtn =
+        document.getElementById("menuBtn");
+
+    const navLinks =
+        document.getElementById("navLinks");
+
+
+    menuBtn.addEventListener(
+        "click",
+        () => {
+
+            navLinks.classList.toggle("active");
+
+        }
+    );
+
+
+
+    /* =========================
+       SEARCH MODAL
+    ========================== */
+
+    const searchBtn =
+        document.getElementById("searchBtn");
+
+    const searchModal =
+        document.getElementById("searchModal");
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+
+    searchBtn.addEventListener(
+        "click",
+        () => {
+
+            searchModal.classList.add("active");
+
+            searchInput.focus();
+
+        }
+    );
+
+
+    searchModal.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                event.target === searchModal
+            ) {
+
+                searchModal.classList.remove("active");
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================
+       ESCAPE KEY
+    ========================== */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                searchModal.classList.remove("active");
+
+                accountMenu.classList.remove("active");
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================
+       NEWSLETTER FORM
+    ========================== */
+
+    const newsletterForm =
+        document.getElementById(
+            "newsletterForm"
+        );
+
+
+    newsletterForm.addEventListener(
+        "submit",
+        (event) => {
+
+            event.preventDefault();
+
+            alert(
+                "🎉 Thanks for subscribing to INKORA!"
+            );
+
+            newsletterForm.reset();
+
+        }
+    );
+
+
+
+    /* =========================
+       TRENDING TOPICS
+    ========================== */
+
+    const topics =
+        document.querySelectorAll(
+            ".topic"
+        );
+
+
+    topics.forEach(
+        (topic) => {
+
+            topic.addEventListener(
+                "click",
+                () => {
+
+                    alert(
+                        "Exploring " +
+                        topic.innerText +
+                        " stories!"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =========================
+       CLOSE ACCOUNT MENU
+    ========================== */
+
+    document.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                !event.target.closest(".account")
+            ) {
+
+                accountMenu.classList.remove("active");
+
+            }
+
+        }
+    );
+
+</script>
