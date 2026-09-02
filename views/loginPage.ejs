@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login | INKORA</title>
+    <meta name="description" content="Log in to your INKORA account. Continue discovering ideas, stories, and perspectives from people around the world.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
 
@@ -15,49 +20,121 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
 
             display: flex;
             justify-content: center;
             align-items: center;
 
-            background:
-                radial-gradient(circle at top left, #e9e7ff, transparent 35%),
-                radial-gradient(circle at bottom right, #ffdce5, transparent 35%),
-                #f7f7f7;
+            background: #0a0a0f;
 
             padding: 20px;
+
+            overflow: hidden;
+            position: relative;
         }
+
+
+        /* FLOATING ORBS */
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(124, 58, 237, 0.15);
+            top: -150px;
+            left: -150px;
+            animation: orbFloat1 12s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(168, 85, 247, 0.1);
+            bottom: -100px;
+            right: -100px;
+            animation: orbFloat2 15s ease-in-out infinite;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: rgba(59, 130, 246, 0.08);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbFloat1 10s ease-in-out infinite reverse;
+        }
+
+
+        /* CONTAINER */
 
         .container {
             width: 100%;
             max-width: 1050px;
-            min-height: 650px;
-
-            background: white;
+            min-height: 620px;
 
             display: grid;
             grid-template-columns: 1fr 1fr;
 
-            border-radius: 25px;
+            border-radius: 28px;
             overflow: hidden;
 
-            box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            border: 1px solid rgba(255, 255, 255, 0.06);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+            position: relative;
+            z-index: 1;
+
+            animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
 
 
-        /* LEFT SIDE */
+        /* LEFT SIDE - BRANDING */
 
         .branding {
-            background: #171717;
-            color: white;
+            background: rgba(18, 18, 26, 0.8);
 
-            padding: 60px;
+            padding: 55px;
 
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+
+            position: relative;
+            overflow: hidden;
+
+            animation: fadeInLeft 0.7s ease 0.2s both;
+        }
+
+        .branding::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(
+                circle at 30% 70%,
+                rgba(124, 58, 237, 0.08),
+                transparent 60%
+            );
+            pointer-events: none;
         }
 
         .logo {
@@ -65,81 +142,137 @@
             align-items: center;
             gap: 10px;
 
-            font-size: 25px;
-            font-weight: bold;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
             letter-spacing: 2px;
+
+            color: #f0f0f5;
+
+            position: relative;
+            z-index: 1;
         }
 
         .logo-icon {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
 
             display: flex;
             justify-content: center;
             align-items: center;
 
-            border-radius: 12px;
+            border-radius: 11px;
 
-            background: linear-gradient(135deg, #6c63ff, #ff6584);
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+
+            font-size: 17px;
+            font-weight: 800;
+            color: white;
+
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.35);
+        }
+
+        .branding-content {
+            position: relative;
+            z-index: 1;
         }
 
         .branding-content h1 {
-            font-size: 52px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
             line-height: 1.1;
+            letter-spacing: -1px;
 
-            margin-bottom: 20px;
+            color: #f0f0f5;
+
+            margin-bottom: 18px;
         }
 
         .branding-content h1 span {
-            color: #8d87ff;
+            background: linear-gradient(135deg, #7c3aed, #a855f7, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .branding-content p {
-            color: #aaa;
+            color: #8888a0;
             line-height: 1.7;
-            max-width: 400px;
+            max-width: 360px;
+            font-size: 15px;
         }
 
         .quote {
-            border-left: 3px solid #6c63ff;
-            padding-left: 15px;
+            border-left: 3px solid #7c3aed;
+            padding-left: 16px;
 
-            color: #aaa;
+            color: #55556a;
             font-size: 14px;
+            font-style: italic;
+            line-height: 1.6;
+
+            position: relative;
+            z-index: 1;
         }
 
 
-        /* RIGHT SIDE */
+        /* RIGHT SIDE - FORM */
 
         .form-section {
-            padding: 60px;
+            padding: 55px;
 
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            background: rgba(10, 10, 15, 0.6);
+
+            animation: fadeInRight 0.7s ease 0.3s both;
         }
 
         .form-section h2 {
-            font-size: 34px;
-            margin-bottom: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: #f0f0f5;
+            margin-bottom: 8px;
         }
 
         .subtitle {
-            color: #777;
-            margin-bottom: 35px;
+            color: #8888a0;
+            margin-bottom: 32px;
+            font-size: 14px;
         }
 
+        .subtitle-msg {
+            color: #f43f5e;
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 500;
+
+            padding: 10px 16px;
+            background: rgba(244, 63, 94, 0.1);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+            border-radius: 10px;
+
+            animation: fadeInUp 0.4s ease both;
+        }
+
+
+        /* INPUT GROUPS */
+
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .input-group label {
             display: block;
-
-            font-size: 14px;
-            font-weight: bold;
-
+            font-size: 13px;
+            font-weight: 600;
+            color: #8888a0;
             margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         .input-wrapper {
@@ -148,119 +281,232 @@
 
         .input-group input {
             width: 100%;
+            padding: 14px 16px;
 
-            padding: 15px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
 
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            color: #f0f0f5;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
 
             outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-            font-size: 15px;
-
-            transition: 0.3s;
+        .input-group input::placeholder {
+            color: #55556a;
         }
 
         .input-group input:focus {
-            border-color: #6c63ff;
-
-            box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+            border-color: rgba(124, 58, 237, 0.5);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15),
+                        0 0 20px rgba(124, 58, 237, 0.1);
         }
 
+
+        /* PASSWORD TOGGLE */
+
         .password-toggle {
-            border: none;
             position: absolute;
-
-            right: 15px;
+            right: 14px;
             top: 50%;
-
             transform: translateY(-50%);
 
             background: transparent;
+            border: none;
+            cursor: pointer;
 
-            font-size: 18px;
-        }
-
-        .options {
+            padding: 4px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
 
-            margin-bottom: 25px;
-
-            font-size: 14px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
         }
 
-        .remember {
-            display: flex;
-            gap: 7px;
-            align-items: center;
+        .password-toggle:hover {
+            opacity: 1;
         }
 
-        .forgot-password {
-            color: #6c63ff;
-            font-weight: bold;
+        .password-toggle img {
+            width: 22px;
+            height: 22px;
+            filter: invert(1) brightness(0.7);
         }
+
+
+        /* LOGIN BUTTON */
 
         .login-btn {
             width: 100%;
+            padding: 14px;
 
-            padding: 15px;
-
-            background: #171717;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
             color: white;
 
-            border-radius: 10px;
+            border: none;
+            border-radius: 12px;
 
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
 
-            transition: 0.3s;
+            cursor: pointer;
+
+            position: relative;
+            overflow: hidden;
+
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
+
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.15),
+                transparent
+            );
+            transition: left 0.5s;
         }
 
         .login-btn:hover {
-            background: #333;
             transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.45);
         }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+
+        /* LOADING STATE */
+
+        .login-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .login-btn.loading::after {
+            content: '';
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+
+        /* DIVIDER */
 
         .divider {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
 
-            margin: 30px 0;
+            margin: 28px 0;
 
-            color: #999;
-            font-size: 13px;
+            color: #55556a;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
         }
 
         .divider::before,
         .divider::after {
             content: "";
-
             height: 1px;
-            background: #ddd;
-
+            background: rgba(255, 255, 255, 0.06);
             flex: 1;
         }
 
+
+        /* SIGNUP TEXT */
+
         .signup-text {
             text-align: center;
-            color: #777;
+            color: #8888a0;
+            font-size: 14px;
         }
 
         .signup-text a {
-            color: #6c63ff;
-            font-weight: bold;
+            color: #a855f7;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .signup-text a:hover {
+            color: #c084fc;
         }
 
 
-        /* MOBILE */
+        /* ANIMATIONS */
+
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -40px) scale(1.1); }
+            50% { transform: translate(-20px, -80px) scale(0.95); }
+            75% { transform: translate(40px, -30px) scale(1.05); }
+        }
+
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-40px, 30px) scale(1.05); }
+            50% { transform: translate(30px, 60px) scale(0.95); }
+            75% { transform: translate(-20px, 20px) scale(1.1); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+
+        /* RESPONSIVE */
 
         @media (max-width: 800px) {
 
             .container {
                 grid-template-columns: 1fr;
+                max-width: 480px;
             }
 
             .branding {
@@ -268,21 +514,8 @@
             }
 
             .form-section {
-                padding: 40px 25px;
+                padding: 40px 28px;
             }
-
-        }
-
-        img{
-            width: 25px;
-            height: 25px;
-        }
-
-        .subtitle-msg {
-
-            color: red;
-
-            margin-bottom: 30px;
 
         }
 
@@ -292,6 +525,12 @@
 
 <body>
 
+<!-- FLOATING ORBS -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+
 <div class="container">
 
 
@@ -300,13 +539,8 @@
     <section class="branding">
 
         <div class="logo">
-
-            <div class="logo-icon">
-                I
-            </div>
-
+            <div class="logo-icon">I</div>
             INKORA
-
         </div>
 
 
@@ -323,13 +557,13 @@
                 and perspectives from people around
                 the world.
             </p>
-           
 
         </div>
 
 
         <div class="quote">
-            "A reader lives a thousand lives before they die."
+            "A reader lives a thousand lives before they die.
+            The person who never reads lives only one."
         </div>
 
     </section>
@@ -343,16 +577,20 @@
         <h2>Welcome back 👋</h2>
 
         <% if (locals.msg) { %>
-                <p class=" subtitle-msg">
-                    <%= locals.msg %>
-                </p>
+            <p class="subtitle-msg">
+                <%= locals.msg %>
+            </p>
         <% } %>
+
+        <p class="subtitle">
+            Sign in to continue your journey
+        </p>
 
 
         <form id="loginForm" action="/user/login" method="POST">
 
 
-            <!-- EMAIL -->
+            <!-- IDENTIFIER -->
 
             <div class="input-group">
 
@@ -364,6 +602,7 @@
                     name="identifier"
                     placeholder="Enter your email or username"
                     required
+                    autocomplete="username"
                 >
 
             </div>
@@ -384,6 +623,7 @@
                         name="password"
                         placeholder="Enter your password"
                         required
+                        autocomplete="current-password"
                     >
 
                     <button
@@ -391,18 +631,20 @@
                         class="password-toggle"
                         onclick="togglePassword()"
                     >
-                        <img src="/logos/hide.svg" alt="Hidden/Shown" id="passwordLogo">
+                        <img src="/logos/hide.svg" alt="Toggle password" id="passwordLogo">
                     </button>
 
                 </div>
 
             </div>
 
+
             <!-- LOGIN BUTTON -->
 
             <button
                 type="submit"
                 class="login-btn"
+                id="loginBtn"
             >
                 Log in to INKORA →
             </button>
@@ -451,6 +693,22 @@
         }
 
     }
+
+
+    // Add loading state on submit
+    const loginForm = document.getElementById("loginForm");
+    const loginBtn = document.getElementById("loginBtn");
+
+    loginForm.addEventListener("submit", () => {
+        loginBtn.classList.add("loading");
+        loginBtn.textContent = "Logging in";
+    });
+
+
+    // Focus animation on inputs
+    document.querySelectorAll('.input-group input').forEach((input, i) => {
+        input.style.animation = `fadeInUp 0.5s ease ${0.4 + i * 0.1}s both`;
+    });
 
 </script>
 

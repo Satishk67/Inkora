@@ -3,8 +3,10 @@ const { createHmac } = require("crypto");
 const User = require("../models/user");
 const { setUser } = require("../services/auth");
 
+
 async function createUser(req, res) {
   const { userName, fullName, gender, email, password } = req.body || {};
+  const profilePicture = req.file ? `/uploads/profilePictures/${req.file.filename}` : "/images/defaultProfilePic.svg";
 
   if (!userName || !fullName || !gender || !email || !password) {
     return res.status(400).send("Missing signup fields");
@@ -49,6 +51,7 @@ async function createUser(req, res) {
       userName,
       fullName,
       gender,
+      profilePicture,
       email,
       password: password.trim(),
     });
@@ -57,8 +60,9 @@ async function createUser(req, res) {
     const token = setUser(user);
     res.cookie("userToken",token)
 
-    return res.render("/");
-  } catch (error) {
+    return res.redirect("/");
+  } 
+  catch (error) {
     console.error("Signup failed:", error);
     return res.status(500).send(`Signup failed: ${error.message}`);
   }
@@ -118,7 +122,7 @@ async function loginHandler(req, res) {
     const token = setUser(existingUser);
     res.cookie("userToken",token);
     return res.redirect("/");
-
+    
   } catch (e) {
     return res.status(500).json(`msg : server error ${e.message}`);
   }

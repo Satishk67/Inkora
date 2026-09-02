@@ -1,89 +1,174 @@
 <script>
 
     /* =========================
+       SCROLL REVEAL (Intersection Observer)
+    ========================== */
+
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px'
+        }
+    );
+
+    revealElements.forEach((el) => {
+        revealObserver.observe(el);
+    });
+
+
+
+    /* =========================
+       NAVBAR SCROLL EFFECT
+    ========================== */
+
+    const navbar = document.getElementById('mainNavbar');
+
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+
+        const currentScroll = window.scrollY;
+
+        if (currentScroll > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        lastScroll = currentScroll;
+
+    });
+
+
+
+    /* =========================
+       HAMBURGER MENU
+    ========================== */
+
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    if (menuBtn) {
+
+        menuBtn.addEventListener('click', () => {
+
+            menuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+
+        });
+
+    }
+
+
+
+    /* =========================
+       THEME MANAGEMENT & APPEARANCE DROPDOWN
+    ========================== */
+
+    const appearanceBtn = document.getElementById('appearanceBtn');
+    const themeSubmenu = document.getElementById('themeSubmenu');
+    const themeOptions = document.querySelectorAll('.theme-option');
+
+    function getActiveTheme() {
+        return document.documentElement.getAttribute('data-theme') || 'dark';
+    }
+
+    function updateThemeUI(theme) {
+        themeOptions.forEach((btn) => {
+            const btnTheme = btn.getAttribute('data-theme-value');
+            if (btnTheme === theme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (document.body) {
+            document.body.setAttribute('data-theme', theme);
+        }
+        try {
+            localStorage.setItem('inkora_theme', theme);
+        } catch (e) {}
+        updateThemeUI(theme);
+    }
+
+    // Set initial active state in dropdown
+    updateThemeUI(getActiveTheme());
+
+    if (appearanceBtn && themeSubmenu) {
+
+        appearanceBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = themeSubmenu.classList.toggle('active');
+            appearanceBtn.classList.toggle('open', isOpen);
+            appearanceBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+    }
+
+    themeOptions.forEach((btn) => {
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const selectedTheme = btn.getAttribute('data-theme-value');
+            if (selectedTheme) {
+                setTheme(selectedTheme);
+            }
+        });
+
+    });
+
+
+
+    /* =========================
        ACCOUNT DROPDOWN
     ========================== */
 
-    const accountBtn =
-        document.getElementById("accountBtn");
+    const accountBtn = document.getElementById('accountBtn');
+    const accountMenu = document.getElementById('accountMenu');
 
-    const accountMenu =
-        document.getElementById("accountMenu");
-
-
-    accountBtn.addEventListener(
-        "click",
-        () => {
-
-            accountMenu.classList.toggle("active");
-
+    function closeAccountMenu() {
+        if (accountMenu) {
+            accountMenu.classList.remove('active');
         }
-    );
-
-
-
-    /* =========================
-       MOBILE MENU
-    ========================== */
-
-    const menuBtn =
-        document.getElementById("menuBtn");
-
-    const navLinks =
-        document.getElementById("navLinks");
-
-
-    menuBtn.addEventListener(
-        "click",
-        () => {
-
-            navLinks.classList.toggle("active");
-
+        if (themeSubmenu) {
+            themeSubmenu.classList.remove('active');
         }
-    );
-
-
-
-    /* =========================
-       SEARCH MODAL
-    ========================== */
-
-    const searchBtn =
-        document.getElementById("searchBtn");
-
-    const searchModal =
-        document.getElementById("searchModal");
-
-    const searchInput =
-        document.getElementById("searchInput");
-
-
-    searchBtn.addEventListener(
-        "click",
-        () => {
-
-            searchModal.classList.add("active");
-
-            searchInput.focus();
-
+        if (appearanceBtn) {
+            appearanceBtn.classList.remove('open');
+            appearanceBtn.setAttribute('aria-expanded', 'false');
         }
-    );
+    }
+
+    if (accountBtn && accountMenu) {
+
+        accountBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            accountMenu.classList.toggle('active');
+        });
 
 
-    searchModal.addEventListener(
-        "click",
-        (event) => {
-
-            if (
-                event.target === searchModal
-            ) {
-
-                searchModal.classList.remove("active");
-
+        // Close on outside click
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.account')) {
+                closeAccountMenu();
             }
+        });
 
-        }
-    );
+    }
 
 
 
@@ -91,99 +176,224 @@
        ESCAPE KEY
     ========================== */
 
-    document.addEventListener(
-        "keydown",
-        (event) => {
+    document.addEventListener('keydown', (event) => {
 
-            if (
-                event.key === "Escape"
-            ) {
+        if (event.key === 'Escape') {
 
-                searchModal.classList.remove("active");
+            closeAccountMenu();
 
-                accountMenu.classList.remove("active");
+            if (navLinks) {
+                navLinks.classList.remove('active');
+            }
 
+            if (menuBtn) {
+                menuBtn.classList.remove('active');
             }
 
         }
-    );
+
+    });
 
 
 
     /* =========================
-       NEWSLETTER FORM
+       PARTICLE CANVAS
     ========================== */
 
-    const newsletterForm =
-        document.getElementById(
-            "newsletterForm"
-        );
+    const canvas = document.getElementById('particleCanvas');
+
+    if (canvas) {
+
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+
+        function resizeCanvas() {
+            const hero = canvas.parentElement;
+            canvas.width = hero.offsetWidth;
+            canvas.height = hero.offsetHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
 
-    newsletterForm.addEventListener(
-        "submit",
-        (event) => {
+        class Particle {
+            constructor() {
+                this.reset();
+            }
 
-            event.preventDefault();
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.4 + 0.1;
+                this.fadeDirection = Math.random() > 0.5 ? 1 : -1;
+            }
 
-            alert(
-                "🎉 Thanks for subscribing to INKORA!"
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                this.opacity += this.fadeDirection * 0.003;
+
+                if (this.opacity <= 0.05 || this.opacity >= 0.5) {
+                    this.fadeDirection *= -1;
+                }
+
+                if (this.x < 0 || this.x > canvas.width ||
+                    this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(168, 85, 247, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+
+        // Create particles
+        const particleCount = Math.min(60, Math.floor(canvas.width / 20));
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+
+        // Draw connections
+        function drawConnections() {
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) {
+                        const opacity = (1 - distance / 120) * 0.12;
+
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+
+        // Animation loop
+        function animateParticles() {
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((p) => {
+                p.update();
+                p.draw();
+            });
+
+            drawConnections();
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+    }
+
+
+
+    /* =========================
+       SMOOTH NAV LINK CLICKS
+    ========================== */
+
+    document.querySelectorAll('.nav-links a').forEach((link) => {
+
+        link.addEventListener('click', () => {
+
+            // Close mobile menu
+            if (navLinks) navLinks.classList.remove('active');
+            if (menuBtn) menuBtn.classList.remove('active');
+
+            // Update active state
+            document.querySelectorAll('.nav-links a').forEach((a) =>
+                a.classList.remove('active')
             );
 
-            newsletterForm.reset();
+            link.classList.add('active');
 
-        }
-    );
+        });
 
+    });
 
 
     /* =========================
-       TRENDING TOPICS
+       ACTIVE LINK ON SCROLL
     ========================== */
 
-    const topics =
-        document.querySelectorAll(
-            ".topic"
-        );
+    const sections = document.querySelectorAll('section[id]');
 
+    const sectionObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
 
-    topics.forEach(
-        (topic) => {
+                    const id = entry.target.getAttribute('id');
 
-            topic.addEventListener(
-                "click",
-                () => {
-
-                    alert(
-                        "Exploring " +
-                        topic.innerText +
-                        " stories!"
-                    );
+                    document.querySelectorAll('.nav-links a').forEach((a) => {
+                        a.classList.remove('active');
+                        if (a.getAttribute('href') === `#${id}`) {
+                            a.classList.add('active');
+                        }
+                    });
 
                 }
-            );
-
+            });
+        },
+        {
+            threshold: 0.3
         }
     );
 
+    sections.forEach((section) => {
+        sectionObserver.observe(section);
+    });
 
     /* =========================
-       CLOSE ACCOUNT MENU
+       GLOBAL DELETE BLOG HANDLER
     ========================== */
-
-    document.addEventListener(
-        "click",
-        (event) => {
-
-            if (
-                !event.target.closest(".account")
-            ) {
-
-                accountMenu.classList.remove("active");
-
-            }
-
+    window.deleteBlog = async function (blogId, event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
         }
-    );
+
+        if (confirm('Are you sure you want to delete this story? This action cannot be undone.')) {
+            try {
+                // Send delete request to /blogs/:blogId, appending ?blogId=:blogId for controller compatibility
+                const response = await fetch(`/blogs/${blogId}?blogId=${blogId}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to delete the story.');
+                }
+            } catch (error) {
+                console.error('Error deleting blog:', error);
+                alert('An error occurred while deleting the story.');
+            }
+        }
+    };
 
 </script>
