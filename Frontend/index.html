@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inkora-Share your thoughts here!</title>
+    <script>
+      (function () {
+        var savedTheme = localStorage.getItem("inkora_theme");
+        var systemPrefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+        var theme = savedTheme === "light" || savedTheme === "dark"
+          ? savedTheme
+          : systemPrefersLight
+            ? "light"
+            : "dark";
+
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <style>
+      html,
+      body,
+      #root {
+        min-height: 100%;
+      }
+
+      html,
+      body {
+        background: #0a0a0f;
+        color: #f0f0f5;
+      }
+
+      html[data-theme="light"],
+      html[data-theme="light"] body {
+        background: #f8f9fd;
+        color: #0f172a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
