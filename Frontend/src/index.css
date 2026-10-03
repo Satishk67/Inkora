@@ -2071,6 +2071,16 @@ input::placeholder,
     width: 100%;
 }
 
+.blog-grid-all {
+    grid-template-columns: repeat(4, minmax(0, 360px));
+    justify-content: center;
+}
+
+.blog-grid-dashboard {
+    grid-template-columns: repeat(3, minmax(0, 360px));
+    justify-content: center;
+}
+
 .blog-grid-empty {
     display: flex;
     justify-content: center;
