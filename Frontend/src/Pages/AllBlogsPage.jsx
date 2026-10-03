@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BlogCard from "../Components/BlogCard";
 import LoadingPage from "./LoadingPage";
+import Navbar from "../Components/Navbar"
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -107,6 +108,7 @@ function AllBlogsPage() {
 
   return (
     <>
+    <Navbar/>
       {/* FLOATING ORBS */}
       <div className="orb orb-1"></div>
       <div className="orb orb-2"></div>
@@ -165,7 +167,7 @@ function AllBlogsPage() {
         </div>
 
         {/* BLOG MINIATURES GRID */}
-        <div className={`blog-grid${blogs.length === 0 ? " blog-grid-empty" : ""}`} id="blogGrid">
+        <div className={`blog-grid blog-grid-all${blogs.length === 0 ? " blog-grid-empty" : ""}`} id="blogGrid">
           {blogs.length > 0 ? (
             blogs.map((blog) => (
               <BlogCard
@@ -198,7 +200,7 @@ function AllBlogsPage() {
               (loadingMoreBlogs) ? (
                 <span>Loading...</span>
               ) : (
-                <button className="see-more-btn" onClick={fetchBlogs}>
+                <button className="see-more-btn" onClick={() => fetchBlogs()}>
                   See more
                 </button>
               )

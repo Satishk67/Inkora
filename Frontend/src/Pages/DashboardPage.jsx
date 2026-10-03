@@ -173,7 +173,7 @@ function DashboardPage() {
           <section className="dashboard-main">
             <h2 className="dashboard-section-title">Published Stories</h2>
 
-            <div className="blog-grid">
+            <div className="blog-grid blog-grid-dashboard">
               {blogs && blogs.length ? (
                 blogs.map((blog) => (
                   <BlogCard key={blog._id || blog.id} blog={blog} />
