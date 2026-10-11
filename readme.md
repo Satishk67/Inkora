@@ -1,6 +1,6 @@
 # Inkora
 
-Inkora is a full-stack publishing platform for writers and readers. Members can create an account, publish categorized stories, discover posts, read author profiles, and discuss stories through comments. The application pairs a React single-page frontend with an Express API and MongoDB persistence.
+Inkora is a full-stack publishing platform for writers and readers. Members can create an account, publish categorized stories, discover posts, visit authors profiles, and discuss stories through comments. The application pairs a React single-page frontend with an Express API and MongoDB persistence.
 
 ## Features
 
